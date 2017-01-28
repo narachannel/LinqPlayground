@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace LinqPlayground
 {
@@ -10,6 +8,24 @@ namespace LinqPlayground
     {
         static void Main(string[] args)
         {
+            //InAction.MinMaxAverage();
+            //InAction.BasicSqlLikeMethods();
+            //InAction.GroupByIEnumerable();
+            //InAction.GroupByIGrouping();
+            //InAction.JoinGroupJoinExample();
+            InAction.UnionExceptIntersectSamples();
+            InAction.FirstLastExamples();
+            //Countの使用例
+            //InAction.CountExamples();
+            Console.ReadKey();
         }
+
+        
     }
+
+    
+    
+   
+
+    
 }

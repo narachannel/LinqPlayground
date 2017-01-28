@@ -1,0 +1,20 @@
+﻿<Window x:Class="LinqPF.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:LinqPF"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="350" Width="525">
+    <Grid>
+        <CheckBox x:Name="checkBox" Content="CheckBox" HorizontalAlignment="Left" Margin="48,73,0,0" VerticalAlignment="Top" Height="18" Width="102"/>
+        <CheckBox x:Name="checkBox1" Content="CheckBox" HorizontalAlignment="Left" Margin="48,91,0,0" VerticalAlignment="Top" Height="18" Width="102"/>
+        <Button x:Name="button" Content="Button" HorizontalAlignment="Left" Margin="48,130,0,0" VerticalAlignment="Top" Width="75"/>
+        <ListBox x:Name="listBox" HorizontalAlignment="Left" Height="100" Margin="48,177,0,0" VerticalAlignment="Top" Width="100">
+            <ListBoxItem>aaa</ListBoxItem>
+            <ListBoxItem>bbb</ListBoxItem>
+            <ListBoxItem>ccc</ListBoxItem>
+        </ListBox>
+
+    </Grid>
+</Window>
