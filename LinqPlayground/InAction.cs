@@ -1,10 +1,9 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
-using System.Data.Entity.ModelConfiguration.Configuration;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Xml;
 
 namespace LinqPlayground
 {
@@ -89,6 +88,9 @@ namespace LinqPlayground
             Console.WriteLine("32bit整数型最大数を超える要素を持つコレクションの要素数: " + longArray.LongCount());        
         }
 
+        /// <summary>
+        /// Select, WhereなどのSQLの基本的なメソッド
+        /// </summary>
         public static void BasicSqlLikeMethods()
         {
             //SQLのように書ける
@@ -239,11 +241,28 @@ namespace LinqPlayground
         /// <summary>
         /// SelectMany
         /// </summary>
-        public static void AdvancedSqlLikeMethods()
+        public static void SelectManyMethods()
         {
-            
+            var q = People.OrderBy(p => p.Age).GroupBy(p => Math.Truncate(p.Age / 10.0))
+                .SelectMany(group => group);
+                    
+                
+
+            foreach (var p in q)
+            {
+                //1つ目のループでキーの要素が取得可能
+                Console.WriteLine("{0}代の人:", p.Id);
+                //2つ目のループでそのキーを持つデータがコレクションとして抽出可能
+                //foreach (var person in p)
+                //{
+                //    Console.WriteLine("{0}歳: {1}さん", person.Age, person.Name);
+                //}
+            }
         }
 
+        /// <summary>
+        /// First, Lastメソッドの仕様例
+        /// </summary>
         public static void FirstLastExamples()
         {
             var heightSeries = People.OrderByDescending(p => p.Height).ToArray();
@@ -285,9 +304,48 @@ namespace LinqPlayground
             Console.WriteLine("ペットのうさぎの名前は{0}です", rabbit.Name);
         }
 
+        /// <summary>
+        /// Skip, Takeメソッドの使用例
+        /// </summary>
         public static void SkipTakeExamples()
         {
-            
+            //若い順に並べたリスト
+            var younger = People.OrderBy(p => p.Age).ToList();
+
+
+            //若い人から二人取り出す
+            var q = younger.Take(2);
+
+            Console.WriteLine("若い順に二人取り出します");
+            foreach (var person in q)
+            {
+                Console.WriteLine("{0}さん({1}歳)", person.Name, person.Age);
+            }
+
+            //若い順に一人呼び出して2人抽出する
+            var q1 = younger.Skip(1).Take(2);
+
+            Console.WriteLine("若い順に一人飛ばして二人抽出します");
+            foreach (var person in q1)
+            {
+                Console.WriteLine("{0}さん({1}歳)", person.Name, person.Age);
+            }
+
+            //10代をスキップし、20代だけを抽出する
+            Console.WriteLine("10代をスキップし、20代だけを抽出する");
+            var q2 = younger.SkipWhile(p => p.Age < 20).TakeWhile(p => p.Age < 30);
+            foreach (var person in q2)
+            {
+                Console.WriteLine("{0}さん({1}歳)", person.Name, person.Age);
+            }
+
+            //Skip, Takeは基本null安全
+            Console.WriteLine("多分誰も出てきません");
+            var q3 = younger.Where(p => p.Age < 10).Take(3);
+            foreach (var person in q3)
+            {
+                Console.WriteLine("{0}さん({1}歳)", person.Name, person.Age);
+            }
         }
 
         /// <summary>
@@ -295,7 +353,67 @@ namespace LinqPlayground
         /// </summary>
         public static void ConvertMethods()
         {
-            
+            //List, Arrayに変換する
+            //ToLIst, ToArrayにて変換後もLinqのメソッドも引き続き利用できる
+            var array = People.ToArray();
+            //ArrayになっているのでArrayクラスのプロパティやメソッドが利用可能に
+            Console.WriteLine(array.Length);
+
+            //ToDictionaryで辞書配列に変換可能
+            //なお、Dictionary型はIEnumerable<KeyValuePair>であることに注意
+            var dict = People.ToDictionary(person => "key" + person.Id, person => person.Name);
+            foreach (var pair in dict)
+            {
+                Console.WriteLine("辞書配列キー{0}: Value :{1}", pair.Key, pair.Value);
+            }
+
+            //ToLookUpメソッドでGroupBYメソッドの出力結果をそのままコレクションにして
+            //メモリ上に展開出来る
+            var lookup = People.ToLookup(person => person.Gender);
+
+            foreach (var group in lookup)
+            {
+                Console.WriteLine(group.Key + "グループ");
+
+                foreach (var person in group)
+                {
+                    Console.WriteLine(person.Name);
+                }
+                
+            }
+        }
+
+        public static void NonGenericLinq()
+        {
+            ArrayList al = new ArrayList();
+            al.Add("1");
+            al.Add(2);
+            al.Add(3.0);
+
+            try
+            {
+                //Castメソッドを用いて非ジェネリック型のコレクションも操作可能
+                var q = al.Cast<int>().Where(i => i > 1);
+
+                foreach (var i in q)
+                {
+                    Console.WriteLine(i);
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Castに失敗するよ");
+            }
+
+            al.Add("a");
+
+            //特定の型のみをLINQで扱う
+            var q1 = al.OfType<int>().Where(i => i > 1);
+
+            foreach (var i in q1)
+            {
+                Console.WriteLine(i);
+            }
         }
 
         

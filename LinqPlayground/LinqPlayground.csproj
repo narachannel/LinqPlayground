@@ -52,6 +52,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DataTableExample.cs" />
     <Compile Include="InAction.cs" />
     <Compile Include="Introduction.cs" />
     <Compile Include="Person.cs" />

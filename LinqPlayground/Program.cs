@@ -13,11 +13,15 @@ namespace LinqPlayground
             //InAction.GroupByIEnumerable();
             //InAction.GroupByIGrouping();
             //InAction.JoinGroupJoinExample();
-            InAction.UnionExceptIntersectSamples();
-            InAction.FirstLastExamples();
+            //InAction.UnionExceptIntersectSamples();
+            //InAction.FirstLastExamples();
+            //InAction.SkipTakeExamples();
             //Countの使用例
             //InAction.CountExamples();
+            //InAction.ConvertMethods();
+            InAction.NonGenericLinq();
             Console.ReadKey();
+
         }
 
         
